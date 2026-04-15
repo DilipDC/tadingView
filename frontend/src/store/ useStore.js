@@ -4,7 +4,6 @@ const globalState = {};
 const listeners = {};
 
 export function createStore(key, initialValue) {
-  // initialize store only once
   if (!(key in globalState)) {
     globalState[key] = initialValue;
     listeners[key] = [];
@@ -14,10 +13,8 @@ export function createStore(key, initialValue) {
     const [state, setState] = useState(globalState[key]);
 
     useEffect(() => {
-      // register listener
       listeners[key].push(setState);
 
-      // cleanup on unmount
       return () => {
         listeners[key] = listeners[key].filter(
           (l) => l !== setState
@@ -33,7 +30,6 @@ export function createStore(key, initialValue) {
 
       globalState[key] = newValue;
 
-      // notify all listeners (ONLY ONCE)
       listeners[key].forEach((listener) =>
         listener(newValue)
       );
