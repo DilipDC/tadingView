@@ -1,6 +1,6 @@
 // ================= STOCK STORE =================
 
-import { createStore } from "./useStore";
+import { createStore } from "./useStore.js"; // ✅ FIXED (.js added)
 
 // ================= INITIAL STATE =================
 
