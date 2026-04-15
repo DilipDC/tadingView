@@ -14,8 +14,11 @@ export function createStore(key, initialValue) {
 
     useEffect(() => {
       listeners[key].push(setState);
+
       return () => {
-        listeners[key] = listeners[key].filter(l => l !== setState);
+        listeners[key] = listeners[key].filter(
+          (l) => l !== setState
+        );
       };
     }, []);
 
@@ -26,7 +29,9 @@ export function createStore(key, initialValue) {
           : value;
 
       globalState[key] = newValue;
-      listeners[key].forEach(l => l(newValue));
+
+      // ✅ SINGLE CLEAN UPDATE (FIXED)
+      listeners[key].forEach((listener) => listener(newValue));
     }
 
     return [state, update];
