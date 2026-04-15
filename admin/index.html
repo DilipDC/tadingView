@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Admin Control Panel</title>
+  <link rel="stylesheet" href="admin.css">
+</head>
+<body class="dark">
+
+<!-- LOGIN -->
+<div id="loginPage" class="center">
+  <div class="card">
+    <h2>Admin Login</h2>
+    <input id="username" placeholder="Username">
+    <input id="password" type="password" placeholder="Password">
+    <button onclick="login()">Login</button>
+  </div>
+</div>
+
+<!-- DASHBOARD -->
+<div id="dashboard" class="hidden">
+
+  <header>
+    <h1>Market Control Panel</h1>
+    <button onclick="toggleTheme()">🌙</button>
+  </header>
+
+  <!-- ADD STOCK -->
+  <section class="add-stock">
+    <input id="newName" placeholder="Stock Name">
+    <input id="newPrice" placeholder="Start Price">
+    <button onclick="addStock()">+ Add Stock</button>
+  </section>
+
+  <!-- STOCK LIST -->
+  <div id="stockContainer"></div>
+
+</div>
+
+<script src="admin.js"></script>
+</body>
+</html>

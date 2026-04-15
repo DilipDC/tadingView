@@ -1,0 +1,113 @@
+:root {
+  --bg: #0b0f1a;
+  --card: #111827;
+  --accent: #22ff88;
+  --text: #ffffff;
+}
+
+body {
+  margin: 0;
+  font-family: system-ui;
+  background: var(--bg);
+  color: var(--text);
+  transition: 0.3s;
+}
+
+/* LIGHT MODE */
+body.light {
+  --bg: #f4f4f4;
+  --card: #ffffff;
+  --text: #111;
+}
+
+/* CENTER LOGIN */
+.center {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.card {
+  background: var(--card);
+  padding: 30px;
+  border-radius: 16px;
+  width: 300px;
+  text-align: center;
+}
+
+input, select {
+  width: 100%;
+  padding: 10px;
+  margin: 8px 0;
+  border-radius: 8px;
+  border: none;
+}
+
+button {
+  padding: 10px 20px;
+  border-radius: 8px;
+  border: none;
+  background: var(--accent);
+  cursor: pointer;
+  font-weight: bold;
+  transition: 0.2s;
+}
+
+button:hover {
+  transform: scale(1.05);
+}
+
+/* DASHBOARD */
+header {
+  display: flex;
+  justify-content: space-between;
+  padding: 20px;
+}
+
+/* ADD STOCK */
+.add-stock {
+  display: flex;
+  gap: 10px;
+  padding: 10px;
+}
+
+/* STOCK CARD */
+.stock-card {
+  background: var(--card);
+  margin: 12px;
+  padding: 16px;
+  border-radius: 14px;
+  transition: 0.2s;
+}
+
+.stock-card:hover {
+  transform: translateY(-2px);
+}
+
+/* GRID */
+.controls {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 6px;
+}
+
+/* MODE SWITCH */
+.mode-toggle {
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.mode-toggle button {
+  flex: 1;
+}
+
+.active-mode {
+  background: #00cc66 !important;
+}
+
+/* HIDDEN */
+.hidden {
+  display: none;
+}

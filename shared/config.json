@@ -1,0 +1,18 @@
+{
+  "app_name": "Custom Trading Platform",
+  "version": "1.0",
+
+  "api_url": "http://127.0.0.1:5000",
+
+  "default_settings": {
+    "theme": "dark",
+    "chart_type": "line",
+    "timeframe": "1m"
+  },
+
+  "limits": {
+    "max_stocks": 100,
+    "min_price": 1,
+    "max_price": 100000
+  }
+}

@@ -1,0 +1,28 @@
+/* RESET */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* ROOT */
+body {
+  font-family: "Segoe UI", sans-serif;
+  background: #0b0f1a;
+  color: #fff;
+  overflow: hidden;
+}
+
+/* SCROLL */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-thumb {
+  background: #333;
+  border-radius: 5px;
+}
+
+/* TEXT */
+h1, h2, h3, h4 {
+  font-weight: 500;
+}

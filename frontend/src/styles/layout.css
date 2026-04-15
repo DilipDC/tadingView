@@ -1,0 +1,51 @@
+.main-layout {
+  display: flex;
+  height: 100vh;
+}
+
+/* SIDEBAR */
+.sidebar {
+  width: 220px;
+  background: var(--panel);
+  padding: 10px;
+  border-right: 1px solid #222;
+}
+
+/* CENTER */
+.main-center {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+/* TOPBAR */
+.topbar {
+  height: 50px;
+  background: var(--panel);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 15px;
+}
+
+/* CHART */
+.chart-area {
+  flex: 1;
+  padding: 10px;
+}
+
+/* RIGHT */
+.right-panel {
+  width: 240px;
+  background: var(--panel);
+  border-left: 1px solid #222;
+}
+
+/* BOTTOM */
+.bottom-panel {
+  height: 35px;
+  background: var(--panel);
+  display: flex;
+  align-items: center;
+  padding: 0 10px;
+}
