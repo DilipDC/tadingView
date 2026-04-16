@@ -1,42 +1,33 @@
-import { useState } from "react";
+import { createStore } from "./useStore.js";
 
-const stores = {};
+const initialState = {
+  stocks: [],
+  selectedStock: null,
+  loading: false,
+  error: null
+};
 
-export function createStore(key, initialState) {
-  if (!stores[key]) {
-    stores[key] = {
-      state: initialState,
-      listeners: new Set()
-    };
-  }
+const useStockStoreBase = createStore("stockStore", initialState);
 
-  return function useStore() {
-    const [, forceRender] = useState({});
+export function useStockStore() {
+  const [state, setState] = useStockStoreBase();
 
-    const store = stores[key];
-
-    const setState = (update) => {
-      const nextState =
-        typeof update === "function"
-          ? update(store.state)
-          : update;
-
-      store.state = { ...store.state, ...nextState };
-
-      store.listeners.forEach((listener) => listener({}));
-    };
-
-    const subscribe = (listener) => {
-      store.listeners.add(listener);
-      return () => store.listeners.delete(listener);
-    };
-
-    // subscribe on mount
-    useState(() => {
-      const unsubscribe = subscribe(forceRender);
-      return unsubscribe;
+  const setStocks = (stocks) => {
+    setState({
+      stocks,
+      loading: false,
+      error: null
     });
+  };
 
-    return [store.state, setState];
+  const setSelectedStock = (stock) => {
+    setState({ selectedStock: stock });
+  };
+
+  return {
+    stocks: state.stocks,
+    selectedStock: state.selectedStock,
+    setStocks,
+    setSelectedStock
   };
 }
