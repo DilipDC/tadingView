@@ -1,81 +1,42 @@
-import { createStore } from "./useStore.js";
+import { useState } from "react";
 
-// Initial state
-const initialState = {
-  stocks: [],
-  selectedStock: null,
-  loading: false,
-  error: null,
-};
+const stores = {};
 
-// Create store
-const useStockStoreBase = createStore("stockStore", initialState);
+export function createStore(key, initialState) {
+  if (!stores[key]) {
+    stores[key] = {
+      state: initialState,
+      listeners: new Set()
+    };
+  }
 
-// Custom hook
-export function useStockStore() {
-  const [state, setState] = useStockStoreBase();
+  return function useStore() {
+    const [, forceRender] = useState({});
 
-  const setStocks = (stocks) => {
-    setState((prev) => ({
-      ...prev,
-      stocks,
-      loading: false,
-      error: null,
-    }));
-  };
+    const store = stores[key];
 
-  const addStock = (stock) => {
-    setState((prev) => ({
-      ...prev,
-      stocks: [...prev.stocks, stock],
-    }));
-  };
+    const setState = (update) => {
+      const nextState =
+        typeof update === "function"
+          ? update(store.state)
+          : update;
 
-  const updateStock = (updatedStock) => {
-    setState((prev) => ({
-      ...prev,
-      stocks: prev.stocks.map((s) =>
-        s.id === updatedStock.id ? updatedStock : s
-      ),
-    }));
-  };
+      store.state = { ...store.state, ...nextState };
 
-  const deleteStock = (id) => {
-    setState((prev) => ({
-      ...prev,
-      stocks: prev.stocks.filter((s) => s.id !== id),
-    }));
-  };
+      store.listeners.forEach((listener) => listener({}));
+    };
 
-  const setSelectedStock = (stock) => {
-    setState((prev) => ({
-      ...prev,
-      selectedStock: stock,
-    }));
-  };
+    const subscribe = (listener) => {
+      store.listeners.add(listener);
+      return () => store.listeners.delete(listener);
+    };
 
-  const setLoading = (loading) => {
-    setState((prev) => ({
-      ...prev,
-      loading,
-    }));
-  };
+    // subscribe on mount
+    useState(() => {
+      const unsubscribe = subscribe(forceRender);
+      return unsubscribe;
+    });
 
-  const setError = (error) => {
-    setState((prev) => ({
-      ...prev,
-      error,
-    }));
-  };
-
-  return {
-    ...state,
-    setStocks,
-    addStock,
-    updateStock,
-    deleteStock,
-    setSelectedStock,
-    setLoading,
-    setError,
+    return [store.state, setState];
   };
 }
