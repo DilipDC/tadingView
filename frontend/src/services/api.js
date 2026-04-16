@@ -1,6 +1,6 @@
 // ================= API CORE =================
 
-const BASE_URL = import.meta.env.VITE_API_URL || "";
+const BASE_URL = "https://tadingview.onrender.com";
 
 // ================= REQUEST HANDLER =================
 
