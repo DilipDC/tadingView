@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 
-// 🧠 STORE (FIXED PATHS)
-import { useStocks, useSelectedStock } from "./store/stockStore.js";
+// STORE
+import { useStockStore } from "./store/stockStore.js";
 import {
   useTheme,
   useChartType,
@@ -10,27 +10,30 @@ import {
 } from "./store/uiStore.js";
 import { useEngineRunning } from "./store/engineStore.js";
 
-// 🌐 SERVICES
+// SERVICES
 import { fetchStocks } from "./services/stockService.js";
 
-// 🧩 COMPONENTS
+// COMPONENTS
 import MainLayout from "./components/layout/MainLayout.jsx";
 import ChartCanvas from "./components/chart/ChartCanvas.jsx";
 import ControlsPanel from "./components/controls/ControlsPanel.jsx";
 
-// 🧰 UTILS
+// UTILS
 import { generateData } from "./utils/chartUtils.js";
 
 export default function App() {
 
-  const [stocks, setStocks] = useStocks();
-  const [selectedStock, setSelectedStock] = useSelectedStock();
+  const {
+    stocks,
+    setStocks,
+    selectedStock,
+    setSelectedStock
+  } = useStockStore();
 
   const [theme, setTheme] = useTheme();
   const [chartType, setChartType] = useChartType();
   const [timeframe, setTimeframe] = useTimeframe();
   const [speed, setSpeed] = useSpeed();
-
   const [running, setRunning] = useEngineRunning();
 
   useEffect(() => {
@@ -55,7 +58,6 @@ export default function App() {
     }
 
     load();
-
     const interval = setInterval(load, 2000);
 
     return () => {
