@@ -1,29 +1,27 @@
 import React, { useEffect } from "react";
 
-// 🧠 STORE
-import { useStocks, useSelectedStock } from "./store/stockStore";
+// 🧠 STORE (FIXED PATHS)
+import { useStocks, useSelectedStock } from "./store/stockStore.js";
 import {
   useTheme,
   useChartType,
   useTimeframe,
   useSpeed
-} from "./store/uiStore";
-import { useEngineRunning } from "./store/engineStore";
+} from "./store/uiStore.js";
+import { useEngineRunning } from "./store/engineStore.js";
 
 // 🌐 SERVICES
-import { fetchStocks } from "./services/stockService";
+import { fetchStocks } from "./services/stockService.js";
 
 // 🧩 COMPONENTS
-import MainLayout from "./components/layout/MainLayout";
-import ChartCanvas from "./components/chart/ChartCanvas";
-import ControlsPanel from "./components/controls/ControlsPanel";
+import MainLayout from "./components/layout/MainLayout.jsx";
+import ChartCanvas from "./components/chart/ChartCanvas.jsx";
+import ControlsPanel from "./components/controls/ControlsPanel.jsx";
 
 // 🧰 UTILS
-import { generateData } from "./utils/chartUtils";
+import { generateData } from "./utils/chartUtils.js";
 
 export default function App() {
-
-  // ================= STATE =================
 
   const [stocks, setStocks] = useStocks();
   const [selectedStock, setSelectedStock] = useSelectedStock();
@@ -34,8 +32,6 @@ export default function App() {
   const [speed, setSpeed] = useSpeed();
 
   const [running, setRunning] = useEngineRunning();
-
-  // ================= FETCH STOCKS =================
 
   useEffect(() => {
     let isMounted = true;
@@ -49,7 +45,6 @@ export default function App() {
 
           setStocks(data);
 
-          // set default selected stock safely
           if (data.length > 0) {
             setSelectedStock(prev => prev || data[0]);
           }
@@ -61,7 +56,6 @@ export default function App() {
 
     load();
 
-    // 🔁 auto refresh
     const interval = setInterval(load, 2000);
 
     return () => {
@@ -70,19 +64,13 @@ export default function App() {
     };
   }, []);
 
-  // ================= THEME =================
-
   useEffect(() => {
     document.body.className = theme || "dark";
   }, [theme]);
 
-  // ================= CHART DATA =================
-
   const chartData = selectedStock
     ? generateData(60).map(v => v + selectedStock.price * 0.1)
     : [];
-
-  // ================= RENDER =================
 
   return (
     <MainLayout
@@ -90,8 +78,6 @@ export default function App() {
       selectedStock={selectedStock}
       setSelectedStock={setSelectedStock}
     >
-
-      {/* 🎛 CONTROLS PANEL */}
       <ControlsPanel
         timeframe={timeframe}
         setTimeframe={setTimeframe}
@@ -105,11 +91,9 @@ export default function App() {
         setTheme={setTheme}
       />
 
-      {/* 📊 CHART */}
       <div className="fade-in">
         <ChartCanvas data={chartData} />
       </div>
-
     </MainLayout>
   );
 }
